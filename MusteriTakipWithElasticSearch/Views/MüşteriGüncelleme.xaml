@@ -1,0 +1,43 @@
+﻿<Window x:Class="MusteriTakipWithElasticSearch.Views.MüşteriGüncelleme"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusteriTakipWithElasticSearch.Views"
+        mc:Ignorable="d"
+        Title="MüşteriGüncelleme" Height="250" Width="800">
+    <Grid RenderTransformOrigin="0.119,0.574">
+
+        <GroupBox Header="Müşteri Güncelle" Margin="10">
+            <Grid Height="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Müşteri Adı:" HorizontalAlignment="Left" 
+            VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                <TextBox Text="{Binding MusteriAdi, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" x:Name="TextBox_MusteriAdii"  Height="27" 
+            Margin="5"  Width="300" HorizontalAlignment="Left"/>
+                <Label Content="Müşteri Soyadı:" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+            Grid.Row="1" Grid.Column="0"/>
+                <TextBox Text="{Binding MusteriSoyadi, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" x:Name="TextBox_MusteriSoyadi" Height="27" 
+            Margin="5" Width="300" HorizontalAlignment="Left"/>
+                <Label Content="Müşteri Telefon:" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+            Grid.Row="2" Grid.Column="0" />
+                <TextBox Text="{Binding MusteriTel, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" x:Name="TextBox_MusteriTelefon" Height="27" 
+            Margin="5" Width="300" HorizontalAlignment="Left"/>
+                <Label Content="Müşteri Eposta:" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+            Grid.Row="3" Grid.Column="0" />
+                <TextBox Text="{Binding MusteriEposta, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" x:Name="TextBox_MusteriEposta" Height="27"
+            Margin="5" Width="300" HorizontalAlignment="Left"/>
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</Window>

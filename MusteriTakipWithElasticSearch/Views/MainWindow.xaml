@@ -1,0 +1,75 @@
+﻿<Window x:Class="MusteriTakipWithElasticSearch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusteriTakipWithElasticSearch"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid RenderTransformOrigin="0.119,0.574">
+       
+        <StackPanel Orientation="Vertical">
+            <GroupBox Header="Müşteri Ekle" Margin="10">
+                <Grid Height="150">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Müşteri Adı:" HorizontalAlignment="Left" 
+                       VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox Text="{Binding musteriadi, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" x:Name="TextBox_MusteriAdi"  Height="27" 
+                       Margin="5"  Width="300" HorizontalAlignment="Left"/>
+                    <Label Content="Müşteri Soyadı:" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Text="{Binding musterisoyadi, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" x:Name="TextBox_MusteriSoyadi" Height="27" 
+                       Margin="5" Width="300" HorizontalAlignment="Left"/>
+                    <Label Content="Müşteri Telefon:" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Row="2" Grid.Column="0" />
+                    <TextBox Text="{Binding musteritel , Mode=TwoWay}" Grid.Row="2" Grid.Column="1" x:Name="TextBox_MusteriTelefon" Height="27" 
+                       Margin="5" Width="300" HorizontalAlignment="Left"/>
+                    <Label Content="Müşteri Eposta:" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Row="3" Grid.Column="0" />
+                    <TextBox Text="{Binding musterieposta, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" x:Name="TextBox_MusteriEposta" Height="27"
+                       Margin="5" Width="300" HorizontalAlignment="Left"/>
+                </Grid>
+            </GroupBox>
+            <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button  x:Name="ButtonSave" Command="{Binding AddCommand}" Content="Müşteri Ekle" Height="30" Width="80"/>
+                <Button x:Name="ButtonCancel" Content="Temizle" Height="30" Width="80" Margin="5,0,10,0" Click="ButtonCancel_Click"/>
+            </StackPanel>
+            <StackPanel Height="210">
+                <DataGrid x:Name="musteridatagrid" ItemsSource="{Binding Musterilerr}" SelectedItem="{Binding SelectedMusteri}" AutoGenerateColumns="False"
+                      CanUserAddRows="False" Height="200" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Müşteri Adı" Binding="{Binding Path=MusteriAdi}" Width="150"/>
+                        <DataGridTextColumn Header="Müşteri Soyadı" Binding="{Binding Path=MusteriSoyadi}" Width="150"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Müşteri Telefon" Binding="{Binding Path=MusteriTel}" Width="150"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Müşteri Eposta" Binding="{Binding Path=MusteriEposta}" Width="150" IsReadOnly="True"/>
+                        <DataGridTemplateColumn Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Update" Command="{Binding DataContext.UpdateCommand,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" x:Name="ButtonEdit" Click="ButtonEdit_Click" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" Command="{Binding DataContext.DeleteCommand,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" x:Name="ButtonDelete"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </StackPanel>
+
+
+    </Grid>
+</Window>
