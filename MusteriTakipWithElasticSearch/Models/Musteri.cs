@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MusteriTakipWithElasticSearch.Models
 {
 
-    public class Musteri: INotifyPropertyChanged
+    public class Musteri : INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler? PropertyChanged;

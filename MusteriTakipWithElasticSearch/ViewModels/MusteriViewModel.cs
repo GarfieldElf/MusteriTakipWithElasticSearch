@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Common;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -17,14 +20,12 @@ namespace MusteriTakipWithElasticSearch.ViewModels
 {
     public class MusteriViewModel : INotifyPropertyChanged
     {
-
         private ObservableCollection<Musteri> _musteriler;
         private Musteri _selectedMusteri;
         public string musteriadi { get; set; }
         public string musterisoyadi { get; set; }
         public string musteritel { get; set; }
         public string musterieposta { get; set; }
-
         public ObservableCollection<Musteri> Musterilerr
         {
             get { return _musteriler; }
@@ -34,7 +35,6 @@ namespace MusteriTakipWithElasticSearch.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public Musteri SelectedMusteri
         {
             get { return _selectedMusteri; }
@@ -44,27 +44,32 @@ namespace MusteriTakipWithElasticSearch.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public ICommand DeleteCommand { get; }
         public ICommand AddCommand { get; }
-        public ICommand UpdateCommand { get; }
-
+        //public ICommand UpdateCommand { get; }
         public MusteriViewModel()
         {
             Musterilerr = new ObservableCollection<Musteri>();
             MusterileriGetir();
             AddCommand = new RelayCommand((s) => true, MusteriEkle);
             DeleteCommand = new RelayCommand((s) => true, MusteriSil);
-            UpdateCommand = new RelayCommand((s) => true, MusteriEditle);
+           //UpdateCommand = new RelayCommand((s) => true, MusteriEditle);
         }
-
-        private void MusteriEditle(object parameter)
+        public void MusteriGuncelle(string musteriad, string musterisoyadi, string musterinumara, string musterieposta,int getno)
         {
-                //var employeeToUpdate = parameter as Musteri;
-               
-                 SelectedMusteri = parameter as Musteri;
+            using (MusteriDbContext _context = new MusteriDbContext())
+            {
+                var musteri = _context.Musteriler.FirstOrDefault(x => x.MusteriNo == getno); // burayı hallet
+                if(musteri != null) 
+                {
+                    musteri.MusteriAdi = musteriad;
+                    musteri.MusteriSoyadi = musterisoyadi;
+                    musteri.MusteriTel = musterinumara;
+                    musteri.MusteriEposta = musterieposta;
+                    _context.SaveChanges();
+                }
+            }
         }
-
         private void MusteriEkle(object parameter)
         {
             using (MusteriDbContext _context = new MusteriDbContext())
@@ -84,7 +89,6 @@ namespace MusteriTakipWithElasticSearch.ViewModels
 
                     Musterilerr.Add(yeniMusteri);
                 }
-
             }
         }
         public void MusterileriGetir()
@@ -98,9 +102,7 @@ namespace MusteriTakipWithElasticSearch.ViewModels
                     Musterilerr.Add(employee);
                 }
             }
-
         }
-
         private void MusteriSil(object parameter)
         {
             using (MusteriDbContext _context = new MusteriDbContext())

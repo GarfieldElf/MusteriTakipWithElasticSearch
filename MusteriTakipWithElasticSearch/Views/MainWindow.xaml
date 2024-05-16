@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusteriTakipWithElasticSearch"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid RenderTransformOrigin="0.119,0.574">
        
         <StackPanel Orientation="Vertical">
@@ -24,7 +24,7 @@
                     <Label Content="Müşteri Adı:" HorizontalAlignment="Left" 
                        VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0"/>
                     <TextBox Text="{Binding musteriadi, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" x:Name="TextBox_MusteriAdi"  Height="27" 
-                       Margin="5"  Width="300" HorizontalAlignment="Left"/>
+                       Margin="5"  Width="300" HorizontalAlignment="Left" />
                     <Label Content="Müşteri Soyadı:" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
                        Grid.Row="1" Grid.Column="0"/>
                     <TextBox Text="{Binding musterisoyadi, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" x:Name="TextBox_MusteriSoyadi" Height="27" 
@@ -54,7 +54,7 @@
                         <DataGridTemplateColumn Width="50">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Update" Command="{Binding DataContext.UpdateCommand,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" x:Name="ButtonEdit" Click="ButtonEdit_Click" />
+                                    <Button Content="Update" CommandParameter="{Binding}" x:Name="ButtonEdit" Click="ButtonEdit_Click" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
