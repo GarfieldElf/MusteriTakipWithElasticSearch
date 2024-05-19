@@ -29,9 +29,7 @@ namespace MusteriTakipWithElasticSearch.Views
         {
             InitializeComponent();
             mvm = new MusteriViewModel();
-
-            Musteri getmusteri = passedmusteri;
-            musterino = getmusteri.MusteriNo;
+            musterino = passedmusteri.MusteriNo;
         }
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
         {

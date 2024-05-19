@@ -7,12 +7,15 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Common;
 using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 
@@ -22,6 +25,8 @@ namespace MusteriTakipWithElasticSearch.ViewModels
     {
         private ObservableCollection<Musteri> _musteriler;
         private Musteri _selectedMusteri;
+        private string _searchMusteri;
+
         public string musteriadi { get; set; }
         public string musterisoyadi { get; set; }
         public string musteritel { get; set; }
@@ -44,28 +49,61 @@ namespace MusteriTakipWithElasticSearch.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string SearchMusteri
+        {
+            get { return _searchMusteri; }
+            set
+            {
+                _searchMusteri = value;
+                OnPropertyChanged();
+                Mustericollection.Filter = MusteriAra;
+            }
+        }
+        private ICollectionView _mustericollection;
+        public ICollectionView Mustericollection 
+        {
+            get { return _mustericollection; }
+            set
+            {
+                _mustericollection = value;
+                OnPropertyChanged();
+            }
+        }
         public ICommand DeleteCommand { get; }
         public ICommand AddCommand { get; }
-        //public ICommand UpdateCommand { get; }
         public MusteriViewModel()
         {
             Musterilerr = new ObservableCollection<Musteri>();
             MusterileriGetir();
+            Mustericollection = CollectionViewSource.GetDefaultView(Musterilerr);
             AddCommand = new RelayCommand((s) => true, MusteriEkle);
             DeleteCommand = new RelayCommand((s) => true, MusteriSil);
-           //UpdateCommand = new RelayCommand((s) => true, MusteriEditle);
         }
-        public void MusteriGuncelle(string musteriad, string musterisoyadi, string musterinumara, string musterieposta,int getno)
+        private bool MusteriAra(object parameter)
+        {
+           if(!string.IsNullOrEmpty(SearchMusteri)) 
+           {
+                var musteri  =  parameter as Musteri;
+                return musteri != null &&  musteri.MusteriAdi.StartsWith(SearchMusteri,StringComparison.CurrentCultureIgnoreCase); 
+           }
+           return true;
+        }
+
+        public void MusteriGuncelle(string musteriad, string musterisoyadi, string musterinumara, string musterieposta, int getno)
         {
             using (MusteriDbContext _context = new MusteriDbContext())
             {
-                var musteri = _context.Musteriler.FirstOrDefault(x => x.MusteriNo == getno); // burayı hallet
-                if(musteri != null) 
+                var musteri = _context.Musteriler.FirstOrDefault(x => x.MusteriNo == getno);
+                if (musteri != null)
                 {
-                    musteri.MusteriAdi = musteriad;
-                    musteri.MusteriSoyadi = musterisoyadi;
-                    musteri.MusteriTel = musterinumara;
-                    musteri.MusteriEposta = musterieposta;
+                    musteri = new Musteri
+                    {
+                        MusteriAdi = musteriad,
+                        MusteriSoyadi = musterisoyadi,
+                        MusteriTel = musterinumara,
+                        MusteriEposta = musterieposta
+                    };
                     _context.SaveChanges();
                 }
             }
@@ -82,7 +120,7 @@ namespace MusteriTakipWithElasticSearch.ViewModels
                     MusteriEposta = musterieposta
                 };
 
-                if (yeniMusteri.MusteriAdi != null && yeniMusteri.MusteriSoyadi != null)
+                if (!string.IsNullOrEmpty(yeniMusteri.MusteriAdi) && !string.IsNullOrEmpty(yeniMusteri.MusteriSoyadi))
                 {
                     _context.Musteriler.Add(yeniMusteri);
                     _context.SaveChanges();
@@ -95,11 +133,11 @@ namespace MusteriTakipWithElasticSearch.ViewModels
         {
             using (MusteriDbContext _context = new MusteriDbContext())
             {
-                Musterilerr.Clear(); // Clear existing items
+                Musterilerr.Clear();
 
-                foreach (var employee in _context.Musteriler)
+                foreach (var musteri in _context.Musteriler)
                 {
-                    Musterilerr.Add(employee);
+                    Musterilerr.Add(musteri);
                 }
             }
         }
@@ -107,15 +145,15 @@ namespace MusteriTakipWithElasticSearch.ViewModels
         {
             using (MusteriDbContext _context = new MusteriDbContext())
             {
-                var employeeToDelete = parameter as Musteri;
+                var silinecekmusteri = parameter as Musteri;
 
-                if (employeeToDelete != null)
+                if (silinecekmusteri != null)
                 {
                     //db contextten silinecek datayı çıkar ve degisiklikleri kaydet
-                    _context.Musteriler.Remove(employeeToDelete);
+                    _context.Musteriler.Remove(silinecekmusteri);
                     _context.SaveChanges();
                     // UIdaki listeyi güncelle
-                    Musterilerr.Remove(employeeToDelete);
+                    Musterilerr.Remove(silinecekmusteri);
                 }
             }
         }

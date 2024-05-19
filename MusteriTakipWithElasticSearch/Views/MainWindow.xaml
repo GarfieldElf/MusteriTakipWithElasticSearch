@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusteriTakipWithElasticSearch"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Müşteriler" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid RenderTransformOrigin="0.119,0.574">
        
         <StackPanel Orientation="Vertical">
@@ -42,6 +42,10 @@
             <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button  x:Name="ButtonSave" Command="{Binding AddCommand}" Content="Müşteri Ekle" Height="30" Width="80"/>
                 <Button x:Name="ButtonCancel" Content="Temizle" Height="30" Width="80" Margin="5,0,10,0" Click="ButtonCancel_Click"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <Label Margin="10,0,0,0">Müşteri Arama:</Label>
+                <TextBox Text="{Binding SearchMusteri, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="200" Height="30" Margin="10,0,0,0" ></TextBox>
             </StackPanel>
             <StackPanel Height="210">
                 <DataGrid x:Name="musteridatagrid" ItemsSource="{Binding Musterilerr}" SelectedItem="{Binding SelectedMusteri}" AutoGenerateColumns="False"

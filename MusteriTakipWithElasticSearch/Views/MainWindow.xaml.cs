@@ -31,7 +31,6 @@ namespace MusteriTakipWithElasticSearch
         }
         private void ResetControls()
         {
-             
             TextBox_MusteriAdi.Text = string.Empty;
             TextBox_MusteriSoyadi.Text = string.Empty;
             TextBox_MusteriTelefon.Text = string.Empty;
@@ -39,15 +38,13 @@ namespace MusteriTakipWithElasticSearch
         }
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
         {
-            Musteri m = musteridatagrid.SelectedItem as Musteri;
-            //string madi = m.MusteriAdi;
-            //string msoyadi = m.MusteriSoyadi;
-            //MessageBox.Show(madi + " " + msoyadi);
-            MüşteriGüncelleme MG = new MüşteriGüncelleme(m)
-            {
-                DataContext = m
-            };
+            Musteri? m = musteridatagrid.SelectedItem as Musteri;
+            MüşteriGüncelleme MG = new MüşteriGüncelleme(m) { DataContext = m };
             MG.Show();
+        }
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           //.!!
         }
     }
 }
