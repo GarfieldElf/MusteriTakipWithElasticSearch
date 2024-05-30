@@ -46,6 +46,7 @@
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                 <Label Margin="10,0,0,0">Müşteri Arama:</Label>
                 <TextBox Text="{Binding SearchMusteri, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="200" Height="30" Margin="10,0,0,0" ></TextBox>
+                <Button x:Name="Button_Save_File" Margin="10,0,0,0" Content="Dosyaya Kaydet" Click="Button_Save_File_Click"/>
             </StackPanel>
             <StackPanel Height="210">
                 <DataGrid x:Name="musteridatagrid" ItemsSource="{Binding Musterilerr}" SelectedItem="{Binding SelectedMusteri}" AutoGenerateColumns="False"

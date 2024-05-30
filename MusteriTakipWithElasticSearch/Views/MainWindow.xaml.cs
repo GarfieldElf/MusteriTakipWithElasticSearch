@@ -1,6 +1,8 @@
 ﻿using MusteriTakipWithElasticSearch.Models;
 using MusteriTakipWithElasticSearch.ViewModels;
 using MusteriTakipWithElasticSearch.Views;
+using Newtonsoft.Json;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,9 +44,13 @@ namespace MusteriTakipWithElasticSearch
             MüşteriGüncelleme MG = new MüşteriGüncelleme(m) { DataContext = m };
             MG.Show();
         }
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Button_Save_File_Click(object sender, RoutedEventArgs e)
         {
-           //.!!
+            var cikti = this.musteridatagrid.ItemsSource;
+            var json = JsonConvert.SerializeObject(cikti, Formatting.Indented);
+
+            string fname = @"C:\Users\pc\Desktop\Dosyalar\MusteriBilgileri.JSON";
+            File.WriteAllText(fname, json);
         }
     }
 }

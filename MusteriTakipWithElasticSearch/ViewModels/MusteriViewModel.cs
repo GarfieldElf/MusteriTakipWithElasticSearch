@@ -61,7 +61,7 @@ namespace MusteriTakipWithElasticSearch.ViewModels
             }
         }
         private ICollectionView _mustericollection;
-        public ICollectionView Mustericollection 
+        public ICollectionView Mustericollection
         {
             get { return _mustericollection; }
             set
@@ -82,12 +82,12 @@ namespace MusteriTakipWithElasticSearch.ViewModels
         }
         private bool MusteriAra(object parameter)
         {
-           if(!string.IsNullOrEmpty(SearchMusteri)) 
-           {
-                var musteri  =  parameter as Musteri;
-                return musteri != null &&  musteri.MusteriAdi.StartsWith(SearchMusteri,StringComparison.CurrentCultureIgnoreCase); 
-           }
-           return true;
+            if (!string.IsNullOrEmpty(SearchMusteri))
+            {
+                var musteri = parameter as Musteri;
+                return musteri != null && musteri.MusteriAdi.StartsWith(SearchMusteri, StringComparison.CurrentCultureIgnoreCase);
+            }
+            return true;
         }
 
         public void MusteriGuncelle(string musteriad, string musterisoyadi, string musterinumara, string musterieposta, int getno)
@@ -97,13 +97,10 @@ namespace MusteriTakipWithElasticSearch.ViewModels
                 var musteri = _context.Musteriler.FirstOrDefault(x => x.MusteriNo == getno);
                 if (musteri != null)
                 {
-                    musteri = new Musteri
-                    {
-                        MusteriAdi = musteriad,
-                        MusteriSoyadi = musterisoyadi,
-                        MusteriTel = musterinumara,
-                        MusteriEposta = musterieposta
-                    };
+                    musteri.MusteriAdi = musteriad;
+                    musteri.MusteriSoyadi = musterisoyadi;
+                    musteri.MusteriTel = musterinumara;
+                    musteri.MusteriEposta = musterieposta;
                     _context.SaveChanges();
                 }
             }
