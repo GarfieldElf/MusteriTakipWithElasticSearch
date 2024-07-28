@@ -106,6 +106,9 @@ namespace MusteriTakipWithElasticSearch.ViewModels
                     musteri.MusteriTel = musterinumara;
                     musteri.MusteriEposta = musterieposta;
                     _context.SaveChanges();
+                    //-----------------------------------------------
+                    var elasticConnection = elastic.CreateConnection(); // elastic'e baglan
+                    elastic.UpdateElastic(elasticConnection, musteri); // guncellenecek musteriyi elastic'e gönder
                 }
             }
         }

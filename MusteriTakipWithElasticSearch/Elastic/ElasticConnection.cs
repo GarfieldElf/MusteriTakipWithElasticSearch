@@ -67,6 +67,39 @@ namespace MusteriTakipWithElasticSearch.Elastic
             }
         }
 
+        public async void UpdateElastic(ElasticsearchClient _client, Musteri musteri)
+        {
+
+            var existIndex = _client.Indices.ExistsAsync(IndexName);
+
+            if (existIndex != null) 
+            {
+                var inlineScript = new InlineScript()
+                {
+                    Source = $"ctx._source.{"musteri_adi"} = params.ad; ctx._source.{"musteri_soyadi"} = params.soyad;",
+                    Params = new Dictionary<string, object>
+                    {
+                             { "ad", musteri.MusteriAdi },
+                             { "soyad", musteri.MusteriSoyadi }
+                      }
+                };
+
+                var script = new Script(inlineScript);
+                var updateElastic = await _client.UpdateByQueryAsync<Musteri>(IndexName, d => d
+                                                                        .Query(q => q
+                                                                        .Term(m => m
+                                                                            .Field(f => f.MusteriNo)
+                                                                            .Value(musteri.MusteriNo)))
+                                                                            .Script(script));
+
+             }   
+            else
+            {
+                throw new Exception("Geçerli index bulunamadı.");
+            }
+
+        }
+
         public async Task<List<Musteri>> ElasticSearchQuery(ElasticsearchClient _client)
         {
 
