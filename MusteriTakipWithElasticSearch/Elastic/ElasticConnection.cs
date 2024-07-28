@@ -74,13 +74,17 @@ namespace MusteriTakipWithElasticSearch.Elastic
 
             if (existIndex != null) 
             {
-                var inlineScript = new InlineScript()
+                var inlineScript = new InlineScript() 
                 {
-                    Source = $"ctx._source.{"musteri_adi"} = params.ad; ctx._source.{"musteri_soyadi"} = params.soyad;",
+                   
+                    Source = $"ctx._source.{"musteri_adi"} = params.ad; ctx._source.{"musteri_soyadi"} = params.soyad; " +
+                    $"ctx._source.{"musteri_tel"} = params.telefon_no; ctx._source.{"musteri_eposta"} = params.eposta",
                     Params = new Dictionary<string, object>
                     {
                              { "ad", musteri.MusteriAdi },
-                             { "soyad", musteri.MusteriSoyadi }
+                             { "soyad", musteri.MusteriSoyadi },
+                             { "telefon_no", musteri.MusteriTel },
+                             { "eposta", musteri.MusteriEposta }
                       }
                 };
 
