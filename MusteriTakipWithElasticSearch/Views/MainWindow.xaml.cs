@@ -1,18 +1,16 @@
-﻿using MusteriTakipWithElasticSearch.Models;
+﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Transport;
+using Microsoft.Data.SqlClient;
+using MusteriTakipWithElasticSearch.Models;
 using MusteriTakipWithElasticSearch.ViewModels;
 using MusteriTakipWithElasticSearch.Views;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using Elasticsearch.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using MusteriTakipWithElasticSearch.Elastic;
+
 
 namespace MusteriTakipWithElasticSearch
 {
@@ -22,10 +20,16 @@ namespace MusteriTakipWithElasticSearch
     public partial class MainWindow : Window
     {
         MusteriViewModel mvm = new MusteriViewModel();
+        ElasticConnection elastic = new ElasticConnection();
+   
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new MusteriViewModel();
+
+            //-----------------------------------------
+            var result = elastic.CreateConnection();
+            elastic.ElasticSearchQuery(result);
         }
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {

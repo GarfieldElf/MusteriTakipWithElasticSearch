@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MusteriTakipWithElasticSearch.Models
@@ -30,6 +31,7 @@ namespace MusteriTakipWithElasticSearch.Models
         private string musterieposta { get; set; } = string.Empty;
 
         [Key]
+        [JsonPropertyName("musteri_no")]
         public int MusteriNo
         {
             get { return musterino; }
@@ -37,12 +39,14 @@ namespace MusteriTakipWithElasticSearch.Models
         }
 
         [StringLength(50)]
+        [JsonPropertyName("musteri_adi")]
         public string MusteriAdi
         {
             get { return musteriadi; }
             set { musteriadi = value; OnPropertyChanged("MusteriAdi"); }
         }
         [StringLength(50)]
+        [JsonPropertyName("musteri_soyadi")]
         public string MusteriSoyadi
         {
             get { return musterisoyadi; }
@@ -50,6 +54,7 @@ namespace MusteriTakipWithElasticSearch.Models
         }
 
         [StringLength(50)]
+        [JsonPropertyName("musteri_tel")]
         public string MusteriTel
         {
             get { return musteritel; }
@@ -57,6 +62,7 @@ namespace MusteriTakipWithElasticSearch.Models
         }
 
         [StringLength(50)]
+        [JsonPropertyName("musteri_eposta")]
         public string MusteriEposta
         {
             get { return musterieposta; }

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MusteriTakipWithElasticSearch"
         mc:Ignorable="d"
         Title="Müşteriler" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    
     <Grid RenderTransformOrigin="0.119,0.574">
        
         <StackPanel Orientation="Vertical">
@@ -39,23 +40,26 @@
                        Margin="5" Width="300" HorizontalAlignment="Left"/>
                 </Grid>
             </GroupBox>
-            <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,10">
                 <Button  x:Name="ButtonSave" Command="{Binding AddCommand}" Content="Müşteri Ekle" Height="30" Width="80"/>
                 <Button x:Name="ButtonCancel" Content="Temizle" Height="30" Width="80" Margin="5,0,10,0" Click="ButtonCancel_Click"/>
+                <Button x:Name="Button_Save_File" Margin="0,0,10,0" Content="Dosyaya Kaydet" Click="Button_Save_File_Click" Height="30"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                 <Label Margin="10,0,0,0">Müşteri Arama:</Label>
                 <TextBox Text="{Binding SearchMusteri, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width="200" Height="30" Margin="10,0,0,0" ></TextBox>
-                <Button x:Name="Button_Save_File" Margin="10,0,0,0" Content="Dosyaya Kaydet" Click="Button_Save_File_Click"/>
+                <Label Margin="15,0,0,0">Müşteriyi Elasticten Arama:</Label>
+                <TextBox  HorizontalAlignment="Left" Width="200" Height="30" Margin="10,0,0,0" ></TextBox>
+                <Button x:Name="Button_Search_Elastic" Margin="10,0,0,0" Content="Ara" Width="50" />
             </StackPanel>
             <StackPanel Height="210">
                 <DataGrid x:Name="musteridatagrid" ItemsSource="{Binding Musterilerr}" SelectedItem="{Binding SelectedMusteri}" AutoGenerateColumns="False"
                       CanUserAddRows="False" Height="200" Margin="10">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Müşteri Adı" Binding="{Binding Path=MusteriAdi}" Width="150"/>
-                        <DataGridTextColumn Header="Müşteri Soyadı" Binding="{Binding Path=MusteriSoyadi}" Width="150"  IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Müşteri Telefon" Binding="{Binding Path=MusteriTel}" Width="150"  IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Müşteri Eposta" Binding="{Binding Path=MusteriEposta}" Width="150" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Müşteri Adı"  Binding="{Binding MusteriAdi}" Width="150" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Müşteri Soyadı" Binding="{Binding MusteriSoyadi}" Width="150"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Müşteri Telefon" Binding="{Binding MusteriTel}" Width="150"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Müşteri Eposta" Binding="{Binding MusteriEposta}" Width="150" IsReadOnly="True"/>
                         <DataGridTemplateColumn Width="50">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

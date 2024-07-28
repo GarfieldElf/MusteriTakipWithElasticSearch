@@ -17,7 +17,7 @@ namespace MusteriTakipWithElasticSearch.ViewModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-OHVI9IG;Initial Catalog=Test;Integrated Security=True;Trust Server Certificate=True");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-OHVI9IG;Initial Catalog=Test;Integrated Security=True;Trust Server Certificate=True; MultipleActiveResultSets=True");
             }
         }
 

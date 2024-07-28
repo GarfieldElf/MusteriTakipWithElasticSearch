@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using MusteriTakipWithElasticSearch.Elastic;
 using MusteriTakipWithElasticSearch.Models;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,9 @@ namespace MusteriTakipWithElasticSearch.ViewModels
         private ObservableCollection<Musteri> _musteriler;
         private Musteri _selectedMusteri;
         private string _searchMusteri;
+
+        //------------------------------------------------
+        ElasticConnection elastic = new ElasticConnection();
 
         public string musteriadi { get; set; }
         public string musterisoyadi { get; set; }
@@ -123,6 +127,9 @@ namespace MusteriTakipWithElasticSearch.ViewModels
                     _context.SaveChanges();
 
                     Musterilerr.Add(yeniMusteri);
+                    //-------------------------------------------------------
+                    var result = elastic.CreateConnection();
+                    elastic.WritetoElastic(result, yeniMusteri); // eklenecek musteriyi elastic'e gönder
                 }
             }
         }
