@@ -128,8 +128,8 @@ namespace MusteriTakipWithElasticSearch.ViewModels
 
                     Musterilerr.Add(yeniMusteri);
                     //-------------------------------------------------------
-                    var result = elastic.CreateConnection();
-                    elastic.WritetoElastic(result, yeniMusteri); // eklenecek musteriyi elastic'e gönder
+                    var elasticConnection = elastic.CreateConnection(); // elastic'e baglan
+                    elastic.WritetoElastic(elasticConnection, yeniMusteri); // eklenecek musteriyi elastic'e gönder
                 }
             }
         }
@@ -158,6 +158,9 @@ namespace MusteriTakipWithElasticSearch.ViewModels
                     _context.SaveChanges();
                     // UIdaki listeyi güncelle
                     Musterilerr.Remove(silinecekmusteri);
+                    //---------------------------------------------------------
+                    var elasticConnection = elastic.CreateConnection(); // elastic'e baglan
+                    elastic.DeletefromElastic(elasticConnection, silinecekmusteri); // silinecek musteriyi elastic'e gönder
                 }
             }
         }

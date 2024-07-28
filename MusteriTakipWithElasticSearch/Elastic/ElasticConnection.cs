@@ -50,6 +50,23 @@ namespace MusteriTakipWithElasticSearch.Elastic
             }
         }
 
+        public async void DeletefromElastic(ElasticsearchClient _client, Musteri musteri)
+        {
+
+            var existIndex = _client.Indices.ExistsAsync(IndexName);
+
+            if (existIndex != null)
+            {
+                var deleteFromElastic = await _client.DeleteByQueryAsync<Musteri>(IndexName, d => d.Query(q => q.Term(t => t.Field(f => f.MusteriNo).Value(musteri.MusteriNo))));
+                // musterinin musteri nosuna gore musteriyi elasticten sil
+            }
+
+            else
+            {
+                throw new Exception("Geçerli index bulunamadı.");
+            }
+        }
+
         public async Task<List<Musteri>> ElasticSearchQuery(ElasticsearchClient _client)
         {
 
